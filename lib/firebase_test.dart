@@ -9,15 +9,15 @@ class FirebaseTest {
       FirebaseFirestore.instance.collection('products');
 
   static Future<void> getCategories() async {
-    var ret = await categories.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+    categories.get().then((QuerySnapshot querySnapshot) {
+      for (var doc in querySnapshot.docs) {
         debugPrint(doc["name"]);
-      });
+      }
     });
   }
 
   static Future<void> getProducts() async {
-    var ret = await products.get().then((QuerySnapshot querySnapshot) {
+    await products.get().then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         debugPrint(doc["name"]);
       });
