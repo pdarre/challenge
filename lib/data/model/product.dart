@@ -21,6 +21,15 @@ class Product {
     };
   }
 
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      category: json['category'] ?? 'category not available',
+      description: json['description'] ?? 'description not available',
+      image: json['image'] ?? 'image not available',
+      name: json['name'] ?? 'name not available',
+    );
+  }
+
   Product.fromDocumentSnapshot(QueryDocumentSnapshot<Object?> doc)
       : category = doc['category'],
         description = doc['description'],

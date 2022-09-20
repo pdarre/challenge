@@ -9,9 +9,7 @@ class ProductRemoteDataSource {
     try {
       var queryResponse = await db.collection('products').get();
 
-      return queryResponse.docs
-          .map((e) => Product.fromDocumentSnapshot(e))
-          .toList();
+      return queryResponse.docs.map((e) => Product.fromJson(e.data())).toList();
     } on Exception catch (e) {
       throw Exception(e.toString());
     }

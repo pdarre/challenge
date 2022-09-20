@@ -18,9 +18,9 @@ class FirebaseTest {
 
   static Future<void> getProducts() async {
     await products.get().then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         debugPrint(doc["name"]);
-      });
+      }
     });
   }
 }

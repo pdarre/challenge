@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 
 import '../../data/model/product.dart';
-import '../../utils/data_result.dart';
 import '../model/category.dart';
 
 abstract class IProductRepository {
@@ -10,15 +9,15 @@ abstract class IProductRepository {
   Future<Either<Exception, List<Product>>> getProductsByCategory(
       Category category);
 
-  Future<DataResult<Product>> getProductByName(String prodName);
+  Future<Either<Exception, Product>> getProductByName(String prodName);
 
-  Future<DataResult<int>> getProductIdByName(String prodName);
+  Future<Either<Exception, int>> getProductIdByName(String prodName);
 
-  Future<DataResult<Product>> addProduct(
+  Future<Either<Exception, Product>> addProduct(
       int prodId, Category category, String prodName);
 
-  Future<DataResult<bool>> deleteProductByName(String prodName);
+  Future<Either<Exception, bool>> deleteProductByName(String prodName);
 
-  Future<DataResult<Product>> updateProductByProdId(
+  Future<Either<Exception, Product>> updateProductByProdId(
       int prodId, Category category, String prodName);
 }

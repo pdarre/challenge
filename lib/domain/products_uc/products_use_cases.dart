@@ -7,7 +7,7 @@ class ProductUseCases {
   final IProductRepository productRepository;
   ProductUseCases({required this.productRepository});
 
-  Future<Either<Exception, List<Product>>> getAllProducts() {
-    return productRepository.getAllProducts();
+  Future<Either<Exception, List<Product>>> getAllProducts() async {
+    return await productRepository.getAllProducts();
   }
 }

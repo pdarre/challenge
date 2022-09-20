@@ -13,13 +13,13 @@ class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
   final List<Product> products;
-  const HomeLoaded(this.products);
+  const HomeLoaded({required this.products});
   @override
   List<Object> get props => [products];
 }
 
 class HomeException extends HomeState {
-  final Exception exception;
+  final String exception;
   const HomeException({required this.exception});
   @override
   List<Object> get props => [exception];

@@ -40,6 +40,7 @@ dependencies:
   firebase_core: ^1.22.0
   cloud_firestore: ^3.4.8
   firebase_storage: ^10.3.8
+  bloc: ^8.1.0
   flutter_bloc: ^8.1.1
   equatable: ^2.0.5
   injectable: ^1.5.3

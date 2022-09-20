@@ -1,10 +1,9 @@
-import 'package:challenge/data/model/product.dart';
+import 'package:challenge/domain/model/category.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../domain/model/category.dart';
 import '../../domain/repository/product_repository.dart';
-import '../../utils/data_result.dart';
 import '../datasource/remote_datasource/product_remote_datasource.dart';
+import '../model/product.dart';
 
 class ProductRepositoryImpl implements IProductRepository {
   final ProductRemoteDataSource productRemoteDataSource;
@@ -17,8 +16,33 @@ class ProductRepositoryImpl implements IProductRepository {
       var response = await productRemoteDataSource.getAllProducts();
       return Right(response);
     } catch (e) {
-      return left(Exception(e.toString()));
+      return Left(Exception(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Exception, Product>> addProduct(
+      int prodId, Category category, String prodName) {
+    // TODO: implement addProduct
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Exception, bool>> deleteProductByName(String prodName) {
+    // TODO: implement deleteProductByName
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Exception, Product>> getProductByName(String prodName) {
+    // TODO: implement getProductByName
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Exception, int>> getProductIdByName(String prodName) {
+    // TODO: implement getProductIdByName
+    throw UnimplementedError();
   }
 
   @override
@@ -29,32 +53,7 @@ class ProductRepositoryImpl implements IProductRepository {
   }
 
   @override
-  Future<DataResult<Product>> addProduct(
-      int prodId, Category category, String prodName) {
-    // TODO: implement addProduct
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DataResult<bool>> deleteProductByName(String prodName) {
-    // TODO: implement deleteProductByName
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DataResult<Product>> getProductByName(String prodName) {
-    // TODO: implement getProductByName
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DataResult<int>> getProductIdByName(String prodName) {
-    // TODO: implement getProductIdByName
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DataResult<Product>> updateProductByProdId(
+  Future<Either<Exception, Product>> updateProductByProdId(
       int prodId, Category category, String prodName) {
     // TODO: implement updateProductByProdId
     throw UnimplementedError();

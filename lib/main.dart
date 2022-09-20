@@ -1,11 +1,10 @@
-import 'package:challenge/core/routes.dart';
-import 'package:challenge/di/injector.dart';
-import 'package:challenge/presentation/home_page/view/home_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:challenge/presentation/common_widgets/custom_snackbar.dart';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'core/routes.dart';
+import 'di/injector.dart';
+import 'presentation/home_page/view/home_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
