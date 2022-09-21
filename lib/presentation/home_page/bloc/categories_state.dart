@@ -19,8 +19,8 @@ class CategoriesException extends CategoriesState {
 }
 
 class CategoriesLoaded extends CategoriesState {
-  List<Category> categories;
-  CategoriesLoaded(this.categories);
+  final List<Category> categories;
+  const CategoriesLoaded(this.categories);
   @override
   List<Object> get props => [categories];
 }

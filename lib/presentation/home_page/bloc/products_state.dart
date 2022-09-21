@@ -19,8 +19,8 @@ class ProductsException extends ProductsState {
 }
 
 class ProductsLoaded extends ProductsState {
-  List<Product> products;
-  ProductsLoaded(this.products);
+  final List<Product> products;
+  const ProductsLoaded(this.products);
   @override
   List<Object> get props => [products];
 }

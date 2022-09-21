@@ -1,14 +1,16 @@
-import 'package:challenge/presentation/home_page/widgets/custom_snackbar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../data/model/product.dart';
+import 'custom_snackbar.dart';
 
 class SlidableWidget extends StatelessWidget {
   final Product product;
-  const SlidableWidget({super.key, required this.product});
+  const SlidableWidget({
+    super.key,
+    required this.product,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,8 @@ class SlidableWidget extends StatelessWidget {
         motion: const ScrollMotion(),
         dismissible: DismissiblePane(onDismissed: () {
           //TODO eliminar prod de la db
-          CustomSnackBar.show(context, 'se elimino');
+          CustomSnackBar.show(
+              context, 'delete_product_message'.tr(args: [product.name!]));
         }),
         children: const [
           SlidableAction(

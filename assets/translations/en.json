@@ -1,3 +1,5 @@
 {
-    "home_page_appbar_title": "CT Challenge"
+    "home_page_appbar_title": "CT Challenge",
+    "delete_product_message":"{} was deleted",
+    "no_items_to_show":"No items to show"
 }

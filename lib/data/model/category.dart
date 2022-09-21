@@ -1,15 +1,13 @@
-import 'dart:convert';
-
-import 'package:challenge/data/model/product.dart';
-
 class Category {
+  final int? catId;
   final String? color;
-  final String name;
-  bool isExpanded;
+  final String? name;
+  bool? isExpanded;
   Category({
-    required this.color,
-    required this.name,
-    required this.isExpanded,
+    this.color,
+    this.name,
+    this.isExpanded,
+    this.catId,
   });
 
   Map<String, dynamic> toMap() {

@@ -1,6 +1,3 @@
-import 'package:challenge/data/model/product.dart';
-import 'package:challenge/presentation/home_page/widgets/slidable_widget.dart';
-import 'package:dartz/dartz_unsafe.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +7,7 @@ import '../../../data/model/category.dart';
 import '../../../di/injector.dart';
 import '../bloc/categories_bloc.dart';
 import '../bloc/products_bloc.dart';
+import '../widgets/expandable_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,7 +17,6 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(create: (_) => ProductsBloc(locator.get())),
         BlocProvider(create: (_) => CategoriesBloc(locator.get())),
       ],
       child: Scaffold(
@@ -82,56 +79,22 @@ class BuildHomeListView extends StatelessWidget {
       itemCount: categories.length,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return BuildExpandableCard(category: categories[index]);
+        return BuildProductsProviderCard(category: categories[index]);
       },
     );
   }
 }
 
-class BuildExpandableCard extends StatefulWidget {
+class BuildProductsProviderCard extends StatelessWidget {
   final Category category;
-  const BuildExpandableCard({super.key, required this.category});
+  const BuildProductsProviderCard({super.key, required this.category});
 
-  @override
-  State<BuildExpandableCard> createState() => _BuildExpandableCardState();
-}
-
-class _BuildExpandableCardState extends State<BuildExpandableCard> {
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      //TODO probar pedir aca la lsita de productos
-    });
     return BlocProvider<ProductsBloc>(
       create: (context) => ProductsBloc(locator.get()),
-      child: ExpansionPanelList(
-        expansionCallback: (panelIndex, isExpanded) {
-          setState(() {
-            widget.category.isExpanded = !isExpanded;
-          });
-        },
-        animationDuration: const Duration(seconds: 2),
-        children: [
-          ExpansionPanel(
-            headerBuilder: (BuildContext context, bool isExpanded) {
-              return ListTile(
-                title: Text(widget.category.name),
-              );
-            },
-            body: BlocBuilder<ProductsBloc, ProductsState>(
-              key: Key(widget.category.name),
-              builder: (context, state) {
-                //TODO buscar como armar la lista de productos de acuerdo a su categoria
-                // faltaria llamar a GetProductsByCategory en ProductsBloc
-                return Container();
-              },
-            ),
-            // body: const ListTile(
-            //   title: Text('list body'),
-            // ),
-            isExpanded: widget.category.isExpanded,
-          ),
-        ],
+      child: BuildExpandableCard(
+        category: category,
       ),
     );
   }
