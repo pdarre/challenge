@@ -1,3 +1,5 @@
+import 'package:challenge/core/colors.dart';
+import 'package:challenge/presentation/common_widgets/custom_drawer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,7 @@ class HomePage extends StatelessWidget {
             // should call event with value data (bloc)
           },
         ),
-        drawer: const Drawer(),
+        drawer: const CustomDrawer(),
         body: const HomePageBody(),
       ),
     );
@@ -38,19 +40,13 @@ class HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<CategoriesBloc>(context, listen: false)
+          .add(GetCategoriesEvent(locator.get()));
+    });
     return BlocBuilder<CategoriesBloc, CategoriesState>(
       builder: (context, state) {
-        // TODO update this to switch case
         if (state is CategoriesInitial) {
-          return Center(
-            child: TextButton(
-              onPressed: () {
-                BlocProvider.of<CategoriesBloc>(context, listen: false)
-                    .add(GetCategoriesEvent(locator.get()));
-              },
-              child: const Text('get categories'),
-            ),
-          );
         } else if (state is CategoriesLoading) {
           return const Center(
             child: CircularProgressIndicator(),

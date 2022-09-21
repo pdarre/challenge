@@ -1,3 +1,4 @@
+import 'package:challenge/core/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -23,33 +24,26 @@ class SlidableWidget extends StatelessWidget {
           CustomSnackBar.show(
               context, 'delete_product_message'.tr(args: [product.name!]));
         }),
-        children: const [
+        children: [
           SlidableAction(
             onPressed: null,
-            backgroundColor: Color(0xFFFE4A49),
-            foregroundColor: Colors.white,
+            backgroundColor: ColorsConst.slidableBackgroundColor,
+            foregroundColor: ColorsConst.slidableForegroundColor,
             icon: Icons.delete,
-            label: 'Delete',
+            label: 'slidable_delete_button_text'.tr(),
           ),
         ],
       ),
-      endActionPane: const ActionPane(
-        motion: ScrollMotion(),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            flex: 2,
+            flex: 4,
             onPressed: null,
-            backgroundColor: Color(0xFF7BC043),
-            foregroundColor: Colors.white,
-            icon: Icons.archive,
-            label: 'Archive',
-          ),
-          SlidableAction(
-            onPressed: null,
-            backgroundColor: Color(0xFF0392CF),
-            foregroundColor: Colors.white,
-            icon: Icons.save,
-            label: 'Save',
+            backgroundColor: ColorsConst.slidablefavoriteBackgroundColor,
+            foregroundColor: ColorsConst.slidablefavoriteForegroundColor,
+            icon: Icons.favorite,
+            label: 'slidable_favorite_button_text'.tr(),
           ),
         ],
       ),

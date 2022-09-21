@@ -1,3 +1,4 @@
+import 'package:challenge/utils/sizes_util.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ Future main() async {
   await Firebase.initializeApp();
   await _initialConfig();
   setUp();
+  Devices.init();
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en')],
