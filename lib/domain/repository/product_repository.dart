@@ -7,7 +7,7 @@ abstract class IProductRepository {
   Future<Either<Exception, List<Product>>> getAllProducts();
 
   Future<Either<Exception, List<Product>>> getProductsByCategory(
-      Category category);
+      String catName);
 
   Future<Either<Exception, Product>> getProductByName(String prodName);
 

@@ -1,11 +1,15 @@
+import 'package:challenge/data/model/product.dart';
+import 'package:challenge/presentation/home_page/widgets/slidable_widget.dart';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../data/model/category.dart';
 import '../../../di/injector.dart';
-import '../bloc/home_bloc.dart';
-// import 'package:challenge/utils/sizes_util.dart';
+import '../bloc/categories_bloc.dart';
+import '../bloc/products_bloc.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -15,7 +19,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeBloc(productUseCases: locator.get())),
+        // BlocProvider(create: (_) => ProductsBloc(locator.get())),
+        BlocProvider(create: (_) => CategoriesBloc(locator.get())),
       ],
       child: Scaffold(
         appBar: EasySearchBar(
@@ -36,46 +41,98 @@ class HomePageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<CategoriesBloc, CategoriesState>(
       builder: (context, state) {
         // TODO update this to switch case
-        if (state is HomeInitial) {
+        if (state is CategoriesInitial) {
           return Center(
             child: TextButton(
               onPressed: () {
-                BlocProvider.of<HomeBloc>(context, listen: false)
-                    .add(GetProductsEvent(productUseCases: locator.get()));
+                BlocProvider.of<CategoriesBloc>(context, listen: false)
+                    .add(GetCategoriesEvent(locator.get()));
               },
-              child: const Text('get usuraios'),
+              child: const Text('get categories'),
             ),
           );
-        } else if (state is HomeLoading) {
+        } else if (state is CategoriesLoading) {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        } else if (state is HomeLoaded) {
-          var prod = state.products;
-          return ListView.builder(
-            itemCount: prod.length,
-            itemBuilder: ((context, index) {
-              return Dismissible(
-                key: Key(prod[index].name),
-                child: ListTile(
-                  leading: Image.network(prod[index].image),
-                  title: Text(prod[index].name),
-                  subtitle: Text(prod[index].description),
-                  trailing: Text(prod[index].category),
-                ),
-              );
-            }),
-          );
-        } else if (state is HomeException) {
+        } else if (state is CategoriesLoaded) {
+          var categories = state.categories;
+          return BuildHomeListView(categories: categories);
+        } else if (state is CategoriesException) {
           return Center(
             child: Text(state.exception),
           );
         }
         return Container();
       },
+    );
+  }
+}
+
+class BuildHomeListView extends StatelessWidget {
+  final List<Category> categories;
+  const BuildHomeListView({super.key, required this.categories});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: categories.length,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return BuildExpandableCard(category: categories[index]);
+      },
+    );
+  }
+}
+
+class BuildExpandableCard extends StatefulWidget {
+  final Category category;
+  const BuildExpandableCard({super.key, required this.category});
+
+  @override
+  State<BuildExpandableCard> createState() => _BuildExpandableCardState();
+}
+
+class _BuildExpandableCardState extends State<BuildExpandableCard> {
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //TODO probar pedir aca la lsita de productos
+    });
+    return BlocProvider<ProductsBloc>(
+      create: (context) => ProductsBloc(locator.get()),
+      child: ExpansionPanelList(
+        expansionCallback: (panelIndex, isExpanded) {
+          setState(() {
+            widget.category.isExpanded = !isExpanded;
+          });
+        },
+        animationDuration: const Duration(seconds: 2),
+        children: [
+          ExpansionPanel(
+            headerBuilder: (BuildContext context, bool isExpanded) {
+              return ListTile(
+                title: Text(widget.category.name),
+              );
+            },
+            body: BlocBuilder<ProductsBloc, ProductsState>(
+              key: Key(widget.category.name),
+              builder: (context, state) {
+                //TODO buscar como armar la lista de productos de acuerdo a su categoria
+                // faltaria llamar a GetProductsByCategory en ProductsBloc
+                return Container();
+              },
+            ),
+            // body: const ListTile(
+            //   title: Text('list body'),
+            // ),
+            isExpanded: widget.category.isExpanded,
+          ),
+        ],
+      ),
     );
   }
 }

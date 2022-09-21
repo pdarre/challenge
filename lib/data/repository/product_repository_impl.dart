@@ -21,6 +21,18 @@ class ProductRepositoryImpl implements IProductRepository {
   }
 
   @override
+  Future<Either<Exception, List<Product>>> getProductsByCategory(
+      String catName) async {
+    try {
+      var response =
+          await productRemoteDataSource.getProductsByCategory(catName);
+      return Right(response);
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Exception, Product>> addProduct(
       int prodId, Category category, String prodName) {
     // TODO: implement addProduct
@@ -42,13 +54,6 @@ class ProductRepositoryImpl implements IProductRepository {
   @override
   Future<Either<Exception, int>> getProductIdByName(String prodName) {
     // TODO: implement getProductIdByName
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Exception, List<Product>>> getProductsByCategory(
-      Category category) {
-    // TODO: implement getProductsByCategory
     throw UnimplementedError();
   }
 
