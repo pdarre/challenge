@@ -32,10 +32,8 @@ class CategoryRemoteDataSource {
           .get();
       if (queryResponse.docs.isEmpty) {
         query = await db.collection('categories').add(data);
-        print('no existe');
         return true;
       }
-      print('no existe');
       return false;
     } catch (e) {
       throw Exception(e.toString());
