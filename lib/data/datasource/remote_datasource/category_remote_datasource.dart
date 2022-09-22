@@ -16,4 +16,29 @@ class CategoryRemoteDataSource {
       throw Exception(e.toString());
     }
   }
+
+  Future<bool> addCategory(String color, String name) async {
+    var query;
+    try {
+      var data = {
+        'color': color,
+        'name': name,
+        'isExpanded': false,
+      };
+
+      var queryResponse = await db
+          .collection('categories')
+          .where('name'.toLowerCase(), isEqualTo: name.toLowerCase())
+          .get();
+      if (queryResponse.docs.isEmpty) {
+        query = await db.collection('categories').add(data);
+        print('no existe');
+        return true;
+      }
+      print('no existe');
+      return false;
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

@@ -1,7 +1,7 @@
-import 'package:challenge/presentation/add_item_category_page/add_item_category_page.dart';
 import 'package:challenge/presentation/favorites_page/favorites_page.dart';
 import 'package:flutter/material.dart';
 
+import '../presentation/add_item_category_page/view/add_item_category_page.dart';
 import '../presentation/home_page/view/home_page.dart';
 
 class MyRoutes {

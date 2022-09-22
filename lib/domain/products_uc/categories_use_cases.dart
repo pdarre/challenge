@@ -10,4 +10,8 @@ class CategoriesUseCases {
   Future<Either<Exception, List<Category>>> getAllCategories() async {
     return await categoryRepository.getAllCategories();
   }
+
+  Future<Either<Exception, bool>> addCategory(String color, String name) async {
+    return await categoryRepository.addCategory(color, name);
+  }
 }

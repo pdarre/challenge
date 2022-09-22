@@ -16,5 +16,14 @@
     "description_title": "Description",
     "image_title": "Image",
     "name_title": "Name",
-    "no_image_selected": "No image selected"
+    "pick_color_title": "Pick Color",
+    "no_image_selected": "No image selected",
+    "add_a_photo_text": "Add a Photo",
+    "save_ext": "Save",
+    "browse_gallery_text": "Browse Gallery",
+    "ok_text": "OR",
+    "use_a_camera_text": "Use a Camera",
+    "add_item_title": "ADD ITEM",
+    "add_category_title": "ADD CATEGORY",
+    "something_went_wrong": "Upss,Something went wrong!"
 }

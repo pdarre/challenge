@@ -1,5 +1,3 @@
-import 'package:challenge/core/colors.dart';
-import 'package:challenge/presentation/common_widgets/custom_drawer.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/model/category.dart';
 import '../../../di/injector.dart';
+import '../../common_widgets/custom_drawer.dart';
 import '../bloc/categories_bloc.dart';
 import '../bloc/products_bloc.dart';
 import '../widgets/expandable_card.dart';

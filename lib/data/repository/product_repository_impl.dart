@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:challenge/domain/model/category.dart';
 import 'package:dartz/dartz.dart';
 
@@ -33,10 +35,19 @@ class ProductRepositoryImpl implements IProductRepository {
   }
 
   @override
-  Future<Either<Exception, Product>> addProduct(
-      int prodId, Category category, String prodName) {
-    // TODO: implement addProduct
-    throw UnimplementedError();
+  Future<Either<Exception, bool>> addProduct(
+      String category, String description, File image, String name) async {
+    try {
+      var response = await productRemoteDataSource.addPoduct(
+          category, description, image, name);
+      if (response!) {
+        return const Right(true);
+      } else {
+        return const Right(false);
+      }
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
   }
 
   @override

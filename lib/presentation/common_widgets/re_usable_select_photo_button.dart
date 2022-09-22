@@ -1,3 +1,4 @@
+import 'package:challenge/core/colors.dart';
 import 'package:flutter/material.dart';
 
 class SelectPhoto extends StatelessWidget {
@@ -19,7 +20,7 @@ class SelectPhoto extends StatelessWidget {
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         elevation: 10,
-        primary: Colors.grey.shade200,
+        primary: ColorsConst.elevatedButtonColor,
         shape: const StadiumBorder(),
       ),
       child: Padding(
@@ -29,20 +30,16 @@ class SelectPhoto extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Icon(
-              icon,
-              color: Colors.black,
-            ),
+            Icon(icon, color: ColorsConst.plainBlackColor),
             const SizedBox(
               width: 14,
             ),
             Text(
               textLabel,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
-                color: Colors.black,
+                color: ColorsConst.plainBlackColor,
               ),
             )
           ],

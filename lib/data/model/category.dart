@@ -1,5 +1,4 @@
 class Category {
-  final int? catId;
   final String? color;
   final String? name;
   bool? isExpanded;
@@ -7,19 +6,19 @@ class Category {
     this.color,
     this.name,
     this.isExpanded,
-    this.catId,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'color': color,
       'name': name,
+      'isExpanded': isExpanded,
     };
   }
 
   factory Category.fromJson(Map<String, dynamic> json) {
     return Category(
-      color: json['color'],
+      color: json['color'] ?? 'color not available',
       name: json['name'] ?? 'name not available',
       isExpanded: json['isExpanded'] ?? false,
     );

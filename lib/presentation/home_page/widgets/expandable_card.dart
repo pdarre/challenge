@@ -6,6 +6,7 @@ import '../../../data/model/category.dart';
 import '../../../di/injector.dart';
 import '../bloc/products_bloc.dart';
 import 'slidable_widget.dart';
+import '../../../main.dart';
 
 class BuildExpandableCard extends StatefulWidget {
   final Category category;
@@ -40,7 +41,10 @@ class _BuildExpandableCardState extends State<BuildExpandableCard> {
             canTapOnHeader: true,
             headerBuilder: (BuildContext context, bool isExpanded) {
               return ListTile(
-                title: Text(widget.category.name!),
+                title: Text(
+                  widget.category.name!,
+                  style: TextStyle(color: widget.category.color!.toColor()),
+                ),
               );
             },
             body: BlocBuilder<ProductsBloc, ProductsState>(

@@ -1,82 +1,13 @@
 import 'dart:io';
 
 import 'package:challenge/core/colors.dart';
-import 'package:challenge/presentation/add_item_category_page/select_photo_options_page.dart';
+import 'package:challenge/core/styles.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import '../common_widgets/common_buttons.dart';
-import '../common_widgets/custom_drawer.dart';
 
-class AddItemCategoryPage extends StatelessWidget {
-  const AddItemCategoryPage({super.key});
-  static const String routeName = '/add-item-category-page';
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const CustomDrawer(),
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: ColorsConst.drawerIconColor),
-        centerTitle: false,
-        title: Text(
-          'add_item_category_page_title'.tr(),
-          style: TextStyle(
-            color: ColorsConst.drawerIconColor,
-          ),
-        ),
-      ),
-      body: const BuildAddBody(),
-    );
-  }
-}
-
-class BuildAddBody extends StatefulWidget {
-  const BuildAddBody({super.key});
-
-  @override
-  State<BuildAddBody> createState() => _BuildAddBodyState();
-}
-
-class _BuildAddBodyState extends State<BuildAddBody> {
-  bool isSwitched = false;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-                flex: 2, child: Center(child: Text('add_category_text'.tr()))),
-            Expanded(
-              flex: 2,
-              child: Switch(
-                activeColor: ColorsConst.drawerBackgroundColor,
-                inactiveThumbColor: ColorsConst.drawerBackgroundColor,
-                value: isSwitched,
-                onChanged: (value) {
-                  setState(() {
-                    isSwitched = value;
-                  });
-                },
-              ),
-            ),
-            Expanded(flex: 2, child: Center(child: Text('add_item_text'.tr()))),
-          ],
-        ),
-        Builder(
-          builder: (context) {
-            return isSwitched
-                ? const BuildAddItemBody()
-                : const BuildAddCategoryBody();
-          },
-        )
-      ],
-    );
-  }
-}
+import '../select_photo_options_page.dart';
 
 class BuildAddItemBody extends StatefulWidget {
   const BuildAddItemBody({super.key});
@@ -104,7 +35,7 @@ class _BuildAddItemBodyState extends State<BuildAddItemBody> {
         Navigator.of(context).pop();
       });
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
       Navigator.of(context).pop();
     }
   }
@@ -166,6 +97,22 @@ class _BuildAddItemBodyState extends State<BuildAddItemBody> {
           key: _itemFormKey,
           child: Column(
             children: [
+              const SizedBox(height: 20),
+              Text(
+                'add_item_title'.tr(),
+                style: StylesConst.drawerTextStyle.copyWith(fontSize: 20),
+              ),
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(labelText: 'name_title'.tr()),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'please_enter_some_text'.tr();
+                  }
+                  return null;
+                },
+              ),
               TextFormField(
                 controller: _categoryController,
                 decoration: InputDecoration(labelText: 'category_title'.tr()),
@@ -187,19 +134,20 @@ class _BuildAddItemBodyState extends State<BuildAddItemBody> {
                   return null;
                 },
               ),
+              const SizedBox(height: 20),
               Center(
                 child: Container(
                     height: 200.0,
                     width: 200.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.grey.shade200,
+                      color: ColorsConst.elevatedButtonColor,
                     ),
                     child: Center(
                       child: _image == null
-                          ? const Text(
-                              'No image selected',
-                              style: TextStyle(fontSize: 20),
+                          ? Text(
+                              'no_image_selected'.tr(),
+                              style: const TextStyle(fontSize: 20),
                             )
                           : CircleAvatar(
                               backgroundImage: FileImage(_image!),
@@ -207,43 +155,22 @@ class _BuildAddItemBodyState extends State<BuildAddItemBody> {
                             ),
                     )),
               ),
-              CommonButtons(
-                onTap: () => _showSelectPhotoOptions(context),
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
-                textLabel: 'Add a Photo',
-              ),
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(labelText: 'name_title'.tr()),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'please_enter_some_text'.tr();
-                  }
-                  return null;
-                },
-              ),
+              const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
-                  if (_itemFormKey.currentState!.validate()) {
-                    _itemFormKey.currentState!.save();
-                  }
-                },
-                child: const Text('Save'),
-              ),
+                  onPressed: () => _showSelectPhotoOptions(context),
+                  child: Text('add_a_photo_text'.tr())),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                  onPressed: () {
+                    if (_itemFormKey.currentState!.validate()) {
+                      _itemFormKey.currentState!.save();
+                    }
+                  },
+                  child: Text('save_ext'.tr())),
             ],
           ),
         ),
       ),
     );
-  }
-}
-
-class BuildAddCategoryBody extends StatelessWidget {
-  const BuildAddCategoryBody({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

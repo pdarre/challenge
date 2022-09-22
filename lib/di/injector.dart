@@ -8,6 +8,7 @@ import '../domain/products_uc/categories_use_cases.dart';
 import '../domain/products_uc/products_use_cases.dart';
 import '../domain/repository/category_repository.dart';
 import '../domain/repository/product_repository.dart';
+import '../presentation/add_item_category_page/bloc/add_category_bloc/add_category_bloc.dart';
 import '../presentation/home_page/bloc/categories_bloc.dart';
 import '../presentation/home_page/bloc/products_bloc.dart';
 
@@ -39,4 +40,7 @@ void setUp() {
       () => GetCategoriesEvent(locator.get()));
 
   locator.registerFactory<ProductsBloc>(() => ProductsBloc(locator.get()));
+
+  locator
+      .registerFactory<AddCategoryBloc>(() => AddCategoryBloc(locator.get()));
 }

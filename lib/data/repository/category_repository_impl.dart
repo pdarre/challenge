@@ -17,4 +17,18 @@ class CategoryRepositoryImpl implements ICategoryRepository {
       return Left(Exception(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Exception, bool>> addCategory(String color, String name) async {
+    try {
+      var response = await categoryRemoteDataSource.addCategory(color, name);
+      if (response) {
+        return const Right(true);
+      } else {
+        return const Right(false);
+      }
+    } catch (e) {
+      return Left(Exception(e.toString()));
+    }
+  }
 }

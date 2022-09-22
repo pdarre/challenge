@@ -14,3 +14,11 @@ class GetCategoriesEvent extends CategoriesEvent {
   @override
   List<Object> get props => [categoriesList];
 }
+
+class AddNewCategory extends CategoriesEvent {
+  final String name;
+  final String color;
+  AddNewCategory(this.name, this.color);
+  @override
+  List<Object> get props => [name, color];
+}
